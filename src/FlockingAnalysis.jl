@@ -1,7 +1,7 @@
 module FlockingAnalysis
 using Contour, Statistics
 
-export flock_outline, flock_deviations
+export flock_outline, flock_deviations, flock_midpoint
 
 function flock_outline(x_vec, y_vec, image_values)
     median_contour = Contour.levels(contours(x_vec,y_vec,image_values, 1))[1]
