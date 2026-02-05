@@ -221,19 +221,28 @@ end
 fps = 30.0
 samples_per_frame = floor(Int, fs[] / fps)
 
+base_multiplier = 2.0
+
 for signal in smooth_data
 
-    x = range(1, samples_per_frame, length(signal))
+    # x = range(1, samples_per_frame, length(signal))
+    x = 1:length(signal)
     y = signal
 
     itp_cubic = cubic_spline_interpolation(x, y)
 
-    x_new = 1:samples_per_frame
+    # Get the length of the sample relative to the desired length
+    frame_ratio = base_multiplier * length(signal) / samples_per_frame
+
+    # Play each same frame_ratio number of times
+    x_new = clamp.((range(0, frame_ratio*length(signal) - 1, samples_per_frame) .% length(signal)) .+ 1, 1, length(signal))
+
 
     for x_val in x_new
         push!(final_audio, itp_cubic(x_val))
     end
-    
+
+
 end
 
 
@@ -243,10 +252,12 @@ ax = Axis(fig[1, 1])
 
 plot_values = [309, 561]
 
-for i in plot_values
-    # lines!(ax, 1:length(aligned_audio[i]), aligned_audio[i], color = :red)
-    lines!(ax, 1:length(smooth_data[i]), smooth_data[i], color = :blue)
-end
+# for i in plot_values
+#     # lines!(ax, 1:length(aligned_audio[i]), aligned_audio[i], color = :red)
+#     lines!(ax, 1:length(smooth_data[i]), smooth_data[i], color = :blue)
+# end
+
+
 # lines!(ax, 1:length(scaled_audio[23]), scaled_audio[23], color = :black)
 # lines!(ax, 1:length(scaled_audio[24]), scaled_audio[24], color = :green)
 # lines!(ax, 1:length(scaled_audio[24]), phase_matching(scaled_audio[24], scaled_audio[23], 50), color = :red)
