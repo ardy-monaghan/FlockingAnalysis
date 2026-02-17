@@ -33,6 +33,10 @@ Manifest.toml
 *.jpg
 *.jpeg
 *.gif
+*.wav
+*.DS_Store
+*.mp4
+Manifest.toml
 
 # Icon must end with two \r
 Icon

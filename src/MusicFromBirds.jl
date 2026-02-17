@@ -1,4 +1,4 @@
-module FlockingAnalysis
+module MusicFromBirds
 using Contour, Statistics
 
 export flock_outline, flock_deviations, flock_midpoint
@@ -27,4 +27,4 @@ function flock_deviations(xs, ys)
     return deviations
 end
 
-end # module FlockingAnalysis
+end # module MusicFromBirds
